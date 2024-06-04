@@ -1,0 +1,93 @@
+.btn:focus {
+    outline: none !important;
+    --bs-btn-focus-shadow-rgb: transparent;
+}
+
+.navbar-nav .dropdown-menu {
+    position: absolute;
+    left: -260%;
+}
+
+.advertisement_cont {
+    overflow: hidden;
+    font-family: "Pridi", sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    background-color: #525252;
+    color: white;
+}
+.advertisement_cont_wrapper {
+    display: flex;
+}
+
+.advertisement {
+    flex-shrink: 0;
+    margin: 0;
+    padding: 5px 7px;
+    min-width: 100%;
+    white-space: nowrap;
+    animation-name: advertisement;
+    animation-duration: 8s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.active {
+    background: #212529 !important;
+    border-color: #212529 !important;
+}
+
+@keyframes advertisement {
+    from {
+        transform: translateX(-10%);
+    }
+
+    to {
+        transform: translateX(-110%);
+    }
+}
+
+@media (min-width: 992px) {
+    .sidebar_filter {
+        display: flex;
+    }
+    .filters_nav {
+        display: none;
+    }
+    .seacrh_nav {
+        display: flex;
+    }
+
+    .seacrh_navbar {
+        display: flex;
+    }
+
+    .currency_bar {
+        display: flex !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .sidebar_filter {
+        display: none;
+    }
+    .filters_nav {
+        display: flex;
+    }
+    .seacrh_nav {
+        display: none;
+    }
+
+    .seacrh_navbar {
+        display: none;
+    }
+
+    .navbar-nav .btn {
+        width: 70%;
+    }
+
+    .currency_bar {
+        display: none !important;
+    }
+}

@@ -3,87 +3,45 @@ const DataTypes = require("sequelize");
 
 const User = sequelize.define("user", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    email: { type: DataTypes.STRING, unique: true },
-    password: { type: DataTypes.STRING },
+    idnp: { type: DataTypes.STRING, allowNull: false },
+    email: { type: DataTypes.STRING, unique: true, allowNull: false },
+    password: { type: DataTypes.STRING, allowNull: false },
+    phone: { type: DataTypes.STRING, unique: true },
     role: { type: DataTypes.STRING, defaultValue: "USER" },
-    balance: { type: DataTypes.FLOAT, defaultValue: "1000" },
 });
 
-const Basket = sequelize.define("basket", {
+const Account = sequelize.define("account", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    balance: { type: DataTypes.DECIMAL, defaultValue: "1000.5" },
+    unit: { type: DataTypes.STRING, defaultValue: "MDL" },
 });
 
-const BasketDevice = sequelize.define("basket_device", {
+const Service = sequelize.define("service", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    name: { type: DataTypes.STRING, unique: true },
 });
 
-const UserOrder = sequelize.define("basket_device", {
+const Receipt = sequelize.define("receipt", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    userId: { type: DataTypes.INTEGER, allowNull: false },
-    deviceId: { type: DataTypes.INTEGER, allowNull: false },
-    totalPrice: { type: DataTypes.FLOAT, allowNull: false },
+    bill: { type: DataTypes.DECIMAL, allowNull: false },
+    unit: { type: DataTypes.STRING, defaultValue: "MDL" },
 });
 
-const Device = sequelize.define("device", {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    name: { type: DataTypes.STRING, unique: true, allowNull: false },
-    price: { type: DataTypes.INTEGER, allowNull: false },
-    img: { type: DataTypes.STRING, allowNull: false },
-    qty: { type: DataTypes.INTEGER, allowNull: false },
-});
+User.hasMany(Account);
+Account.belongsTo(User);
 
-const Type = sequelize.define("type", {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    name: { type: DataTypes.STRING, unique: true, allowNull: false },
-});
+Service.hasMany(Receipt);
+Receipt.belongsTo(Service);
 
-const Brand = sequelize.define("brand", {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    name: { type: DataTypes.STRING, unique: true, allowNull: false },
-});
+Receipt.belongsTo(Account, { as: "sender", foreignKey: Account.id });
+Receipt.belongsTo(Account, { as: "recipient", foreignKey: Account.id });
 
-const DeviceInfo = sequelize.define("device_info", {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    title: { type: DataTypes.STRING, allowNull: false },
-    description: { type: DataTypes.STRING, allowNull: false },
-});
-
-const TypeBrand = sequelize.define("type_brand", {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-});
-
-User.hasOne(Basket);
-Basket.belongsTo(User);
-
-User.hasMany(UserOrder);
-UserOrder.belongsTo(User);
-
-Basket.hasMany(BasketDevice);
-BasketDevice.belongsTo(Basket);
-
-Type.hasMany(Device);
-Device.belongsTo(Type);
-
-Brand.hasMany(Device);
-Device.belongsTo(Brand);
-
-Device.hasMany(BasketDevice);
-BasketDevice.belongsTo(Device);
-
-Device.hasMany(DeviceInfo, { as: "info" });
-DeviceInfo.belongsTo(Device);
-
-Type.belongsToMany(Brand, { through: TypeBrand });
-Brand.belongsToMany(Type, { through: TypeBrand });
+Account.hasMany(Receipt, { as: "sentReceipts", foreignKey: Account.id });
+Account.hasMany(Receipt, { as: "receivedReceipts", foreignKey: Account.id });
 
 module.exports = {
     User,
-    Basket,
-    UserOrder,
-    BasketDevice,
-    Device,
-    Type,
-    Brand,
-    TypeBrand,
-    DeviceInfo,
+    Account,
+    Service,
+    Receipt,
 };

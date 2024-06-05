@@ -1,11 +1,5 @@
 import React, { useState } from "react";
 import { Button, Container, ListGroup, ListGroupItem } from "react-bootstrap";
-import CreateType from "../components/modals/CreateType";
-import CreateBrand from "../components/modals/CreateBrand";
-import CreateDevice from "../components/modals/CreateDevice";
-import ChangeType from "../components/modals/ChangeType";
-import ChangeBrand from "../components/modals/ChangeBrand";
-import ChangeDevice from "../components/modals/ChangeDevice";
 
 const Admin = () => {
     const [brandVisible, setBrandVisible] = useState(false);
@@ -174,13 +168,13 @@ const Admin = () => {
                     </Button>
                 </div>
             )}
-            <CreateType show={typeVisible} onHide={() => setTypeVisible(false)} />
+            {/* <CreateType show={typeVisible} onHide={() => setTypeVisible(false)} />
             <CreateBrand show={brandVisible} onHide={() => setBrandVisible(false)} />
             <CreateDevice show={deviceVisible} onHide={() => setDeviceVisible(false)} />
 
             <ChangeType show={changeTypeVisible} onHide={() => setChangeTypeVisible(false)} />
             <ChangeBrand show={changeBrandVisible} onHide={() => setChangeBrandVisible(false)} />
-            <ChangeDevice show={changeDeviceVisible} onHide={() => setChangeDeviceVisible(false)} />
+            <ChangeDevice show={changeDeviceVisible} onHide={() => setChangeDeviceVisible(false)} /> */}
         </div>
     );
 };

@@ -24,7 +24,26 @@ export const check = async () => {
 
 export const updateUserData = async (email, password, phone) => {
     let userId = JSON.parse(localStorage.getItem("userId"));
-    console.log(userId);
     const { data } = await $authHost.post("api/user/update", { userId, email, password, phone });
+    return data;
+};
+
+export const createAccount = async (unit) => {
+    let userId = JSON.parse(localStorage.getItem("userId"));
+    const { data } = await $authHost.post("api/account/create", { userId, unit });
+    return data;
+};
+
+export const transferP2P = async (unit) => {
+    let userId = JSON.parse(localStorage.getItem("userId"));
+    const { data } = await $authHost.post("api/service/transfer", { userId, unit });
+    return data;
+};
+
+export const getAccountData = async () => {
+    let userId = JSON.parse(localStorage.getItem("userId"));
+    console.log(userId);
+    const { data } = await $authHost.get("api/account/getInfo", userId);
+    console.log(data);
     return data;
 };

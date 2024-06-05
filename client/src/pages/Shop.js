@@ -4,14 +4,23 @@ import { observer } from "mobx-react-lite";
 import AccountSettings from "../components/modals/AccountSettings";
 import AccountData from "../components/modals/AccountData";
 import CreateAccount from "../components/modals/CreateAccount";
+import TransferP2P from "../components/modals/TransferP2P";
+import PayService from "../components/modals/PayService";
+import { getAccountData } from "../http/userAPI";
+import { Context } from "..";
 
 const Shop = observer(() => {
+    const { accounts } = useContext(Context);
+    useEffect(() => {
+        getAccountData().then((data) => accounts.setAccount(data));
+    }, []);
     const [accountSettings, setAccountSettings] = useState(false);
     const [accountInformation, setAccountInformation] = useState(false);
     const [createAccount, setCreateAccount] = useState(false);
+    const [transferP2P, setTransferP2P] = useState(false);
+    const [payService, setPayService] = useState(false);
 
     const [transfer, setTransfer] = useState(false);
-    const [payService, setPayService] = useState(false);
 
     const [addMenuVisible, setAddMenuVisible] = useState(true);
     const [changeMenuVisible, setChangeMenuVisible] = useState(false);
@@ -107,7 +116,7 @@ const Shop = observer(() => {
                             className={
                                 "mt-4 mx-2 d-flex align-items-center justify-content-center flex-column px-5 py-3"
                             }
-                            onClick={() => setTransfer(true)}>
+                            onClick={() => setTransferP2P(true)}>
                             <svg
                                 xmlns='http://www.w3.org/2000/svg'
                                 width='48'
@@ -124,7 +133,7 @@ const Shop = observer(() => {
                             className={
                                 "mt-4 mx-2 d-flex align-items-center justify-content-center flex-column px-5 py-3"
                             }
-                            onClick={() => setChangeMenuVisible(true)}>
+                            onClick={() => setPayService(true)}>
                             <svg
                                 xmlns='http://www.w3.org/2000/svg'
                                 width='48'
@@ -146,6 +155,8 @@ const Shop = observer(() => {
                     onHide={() => setAccountInformation(false)}
                 />
                 <CreateAccount show={createAccount} onHide={() => setCreateAccount(false)} />
+                <TransferP2P show={transferP2P} onHide={() => setTransferP2P(false)} />
+                <PayService show={payService} onHide={() => setPayService(false)} />
             </div>
         </div>
     );

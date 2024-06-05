@@ -1,15 +1,17 @@
 import React, { useState, useContext } from "react";
 import { Button, Modal, InputGroup, Form, ListGroup, Image } from "react-bootstrap";
-import { createAccount } from "../../http/userAPI";
-import { useNavigate } from "react-router-dom";
+import { transferP2P } from "../../http/userAPI";
 import { SHOP_ROUTE } from "../../utils/consts";
-const CreateAccount = ({ show, onHide }) => {
+import { useNavigate } from "react-router-dom";
+
+const AccountData = ({ show, onHide }) => {
     const navigate = useNavigate();
-    const [unit, setUnit] = useState("");
+    const [toAccountId, setToAccountId] = useState("");
+    const [amount, setAmount] = useState("");
     const click = async () => {
         try {
             let data;
-            data = await createAccount(unit);
+            data = await transferP2P(toAccountId, amount);
             navigate(SHOP_ROUTE);
         } catch (e) {
             alert(e.response.data.message);
@@ -18,14 +20,23 @@ const CreateAccount = ({ show, onHide }) => {
     return (
         <Modal show={show} onHide={onHide} backdrop='static' keyboard={false} className='mt-5'>
             <Modal.Body>
-                <Modal.Header>Данные ваших счетов</Modal.Header>
+                <Modal.Header>Перевод другому пользователю</Modal.Header>
                 <InputGroup style={{ paddingTop: "1rem" }}>
                     <Form.Control
-                        placeholder='Введите желаемую условную единицу'
+                        placeholder='Введите ID пользователя'
                         aria-label='model'
-                        name='unit'
-                        onChange={(e) => setUnit(e.target.value)}
-                        value={unit}
+                        name='toUserId'
+                        onChange={(e) => setToAccountId(e.target.value)}
+                        value={toAccountId}
+                    />
+                </InputGroup>
+                <InputGroup style={{ paddingTop: "1rem" }}>
+                    <Form.Control
+                        placeholder='Введите желаемую сумму'
+                        aria-label='model'
+                        name='amount'
+                        onChange={(e) => setAmount(e.target.value)}
+                        value={amount}
                     />
                 </InputGroup>
             </Modal.Body>
@@ -41,4 +52,4 @@ const CreateAccount = ({ show, onHide }) => {
     );
 };
 
-export default CreateAccount;
+export default AccountData;

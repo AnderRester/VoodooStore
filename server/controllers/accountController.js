@@ -35,7 +35,7 @@ class AccountController {
     }
 
     async getUserAccountInfo(req, res, next) {
-        const { userId } = req.body;
+        const userId = req.body;
 
         return await Sequelize.transaction(async (transaction) => {
             // Fetch the user (optional, depending on your needs)

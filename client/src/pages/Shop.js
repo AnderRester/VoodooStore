@@ -10,10 +10,6 @@ import { getAccountData } from "../http/userAPI";
 import { Context } from "..";
 
 const Shop = observer(() => {
-    const { accounts } = useContext(Context);
-    useEffect(() => {
-        getAccountData().then((data) => accounts.setAccount(data));
-    }, []);
     const [accountSettings, setAccountSettings] = useState(false);
     const [accountInformation, setAccountInformation] = useState(false);
     const [createAccount, setCreateAccount] = useState(false);

@@ -34,9 +34,9 @@ export const createAccount = async (unit) => {
     return data;
 };
 
-export const transferP2P = async (unit) => {
+export const transferP2P = async (toAccountId, amount) => {
     let userId = JSON.parse(localStorage.getItem("userId"));
-    const { data } = await $authHost.post("api/service/transfer", { userId, unit });
+    const { data } = await $authHost.post("api/service/transfer", { userId, toAccountId, amount });
     return data;
 };
 
